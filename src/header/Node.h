@@ -6,6 +6,7 @@
 #define GRAPH_VISUALIZATION_NODE_H
 #include<iostream>
 
+
 class Node {
 public:
     std::string name;

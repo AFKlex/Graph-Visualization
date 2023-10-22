@@ -5,26 +5,26 @@
 #include<iostream>
 #include "header/AppConfig.h"
 #include"header/window.h"
-bool initWindow(SDL_Window *&ptrWindow){
+bool initWindow(){
     bool  success = true;
 
     // Initialize Window
-    ptrWindow = SDL_CreateWindow("Graph Visualization", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,AppConfig::WINDOW_WIDTH,AppConfig::WINDOW_HEIGHT,SDL_WINDOW_SHOWN);
-    if(ptrWindow == nullptr){
+    AppConfig::WINDOW = SDL_CreateWindow("Graph Visualization", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,AppConfig::WINDOW_WIDTH,AppConfig::WINDOW_HEIGHT,SDL_WINDOW_SHOWN);
+    if(AppConfig::WINDOW == nullptr){
         std::cout << "Window Could not be loaded! SDL Error: " << SDL_GetError() << std::endl;
         success = false;
     }
     return success;
 }
 
-bool initFont(SDL_Surface *&ptrMessage, TTF_Font *&ptrFont){
+bool initFont(){
     bool  success = true;
     if( TTF_Init() == -1 ){ //Initialize SDL_ttf
         std::cout << "Failed to load Font" << std::endl;
         success = false;
     }
-    ptrFont = TTF_OpenFont("../assets/Gothic.ttf", 100);
-    if(ptrFont == nullptr){
+    AppConfig::FONT = TTF_OpenFont("../assets/Gothic.ttf", 100);
+    if(AppConfig::FONT == nullptr){
         std::cout << "Failed to load Font! TTF_Error: " << TTF_GetError() << std::endl;
         success = false;
     }
@@ -32,32 +32,32 @@ bool initFont(SDL_Surface *&ptrMessage, TTF_Font *&ptrFont){
     return success;
 }
 
-bool initRenderer(SDL_Renderer *&ptrRenderer, SDL_Window *&ptrWindow){
+bool initRenderer(){
     bool success = true;
-    ptrRenderer = SDL_CreateRenderer(ptrWindow, -1, SDL_RENDERER_ACCELERATED);
-    if (ptrRenderer == nullptr) {
+    AppConfig::RENDERER = SDL_CreateRenderer(AppConfig::WINDOW, -1, SDL_RENDERER_ACCELERATED);
+    if ( AppConfig::RENDERER == nullptr) {
         std::cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << std::endl;
         success = false;
     }
     return  success;
 }
 
-bool initGame(SDL_Window *&ptrWindow, SDL_Surface *&ptrSurface, SDL_Renderer *&ptrRenderer){
+bool initGame(){
     bool  success = true;
 
     if(SDL_Init(SDL_INIT_VIDEO) <0){
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         success = false;
     }else{
-        success = initWindow(ptrWindow);
+        success = initWindow();
     }
     if(success){
-        ptrSurface  = SDL_GetWindowSurface(ptrWindow);
+        AppConfig::SCREEN_SURFACE  = SDL_GetWindowSurface(AppConfig::WINDOW);
     }else{
         std::cout << "Failed to Load ptrSurface because Window was not good! SDL Error: " << SDL_GetError() << std::endl;
     }
 
-    if(!initRenderer(ptrRenderer,ptrWindow)){
+    if(!initRenderer()){
         std::cout << "Failed to load ptrRenderer! SDL Error: " << SDL_GetError() << std::endl;
     }
 
@@ -65,7 +65,7 @@ bool initGame(SDL_Window *&ptrWindow, SDL_Surface *&ptrSurface, SDL_Renderer *&p
 }
 
 int
-SDL_RenderDrawCircle(SDL_Renderer * renderer, int x, int y, int radius)
+SDL_RenderDrawCircle(int x, int y, int radius)
 {
     int offsetx, offsety, d;
     int status;
@@ -78,14 +78,14 @@ SDL_RenderDrawCircle(SDL_Renderer * renderer, int x, int y, int radius)
     status = 0;
 
     while (offsety >= offsetx) {
-        status += SDL_RenderDrawPoint(renderer, x + offsetx, y + offsety);
-        status += SDL_RenderDrawPoint(renderer, x + offsety, y + offsetx);
-        status += SDL_RenderDrawPoint(renderer, x - offsetx, y + offsety);
-        status += SDL_RenderDrawPoint(renderer, x - offsety, y + offsetx);
-        status += SDL_RenderDrawPoint(renderer, x + offsetx, y - offsety);
-        status += SDL_RenderDrawPoint(renderer, x + offsety, y - offsetx);
-        status += SDL_RenderDrawPoint(renderer, x - offsetx, y - offsety);
-        status += SDL_RenderDrawPoint(renderer, x - offsety, y - offsetx);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x + offsetx, y + offsety);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x + offsety, y + offsetx);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x - offsetx, y + offsety);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x - offsety, y + offsetx);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x + offsetx, y - offsety);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x + offsety, y - offsetx);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x - offsetx, y - offsety);
+        status += SDL_RenderDrawPoint(AppConfig::RENDERER, x - offsety, y - offsetx);
 
         if (status < 0) {
             status = -1;
@@ -110,16 +110,48 @@ SDL_RenderDrawCircle(SDL_Renderer * renderer, int x, int y, int radius)
     return status;
 }
 
-void drawNode(SDL_Renderer *& ptrRender, Node node){
-    SDL_SetRenderDrawColor(ptrRender,255,0,0,0);
-    SDL_RenderDrawCircle(ptrRender, node.x, node.y,15);
+bool loadTextTexture(Node node){
+    bool  success = true;
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(AppConfig::FONT, node.name.c_str(), AppConfig::TEXT_COLOR);
+    if(surfaceMessage == nullptr){
+        std::cout << "Failed to load SurfaceMessage! SDL_Error: " << SDL_GetError() << std::endl;
+        success = false ;
+    }
+    if(AppConfig::textTexture != nullptr){
+        SDL_DestroyTexture(AppConfig::textTexture);
+    }
+    AppConfig::textTexture = SDL_CreateTextureFromSurface(AppConfig::RENDERER, surfaceMessage);
+
+    if(AppConfig::textTexture == nullptr){
+        std::cout << "Failed to load Message! SDL_Error: " << SDL_GetError() << std::endl;
+        success = false;
+    }else{
+        free(surfaceMessage);
+    }
+    return success;
 }
 
-void destroyGame(SDL_Window *&ptrWindow, SDL_Surface *&ptrSurface, SDL_Renderer *&ptrRenderer){
-    SDL_DestroyWindow(ptrWindow);
-    SDL_DestroyRenderer(ptrRenderer);
-    ptrWindow = nullptr;
-    ptrRenderer = nullptr;
-    ptrSurface = nullptr;
+void drawNode(Node node){
+    SDL_SetRenderDrawColor(AppConfig::RENDERER,255,0,0,0);
+    SDL_RenderDrawCircle(node.x, node.y,15);
+    loadTextTexture(node);
+
+    SDL_Rect messageRect; //create a rect
+    messageRect.x = node.x-10;  //controls the rect's x coordinate
+    messageRect.y = node.y-10; // controls the rect's y coordinte
+    messageRect.w = 20; // controls the width of the rect
+    messageRect.h = 20;
+
+    SDL_RenderCopy(AppConfig::RENDERER, AppConfig::textTexture, nullptr, &messageRect);
+
+
+}
+
+void destroyGame(){
+    SDL_DestroyWindow(AppConfig::WINDOW);
+    SDL_DestroyRenderer(AppConfig::RENDERER);
+    AppConfig::WINDOW = nullptr;
+    AppConfig::RENDERER = nullptr;
+    AppConfig::SCREEN_SURFACE= nullptr;
     SDL_Quit();
 }

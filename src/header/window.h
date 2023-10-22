@@ -6,7 +6,8 @@
 #include<SDL2/SDL_ttf.h>
 #ifndef GRAPH_VISUALIZATION_WINDOW_H
 #define GRAPH_VISUALIZATION_WINDOW_H
-bool initGame(SDL_Window *&ptrWindow, SDL_Surface *&ptrSurface, SDL_Renderer *&ptrRenderer);
-void destroyGame(SDL_Window *&ptrWindow, SDL_Surface *&ptrSurface, SDL_Renderer *&ptrRenderer);
-void drawNode(SDL_Renderer *& ptrRender, Node node);
+bool initGame();
+void destroyGame();
+void drawNode(Node node);
+bool initFont();
 #endif //GRAPH_VISUALIZATION_WINDOW_H
