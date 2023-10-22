@@ -6,19 +6,39 @@
 #include "header/Node.h"
 #include "header/AppConfig.h"
 #include "header/Edge.h"
+#include<vector>
+Node create_Node(int x, int y, SDL_Event * e){
+    std::cout << "Type the name in the Graph and press enter. Backspace to delete a character is allowed!"<< std::endl;
+    std::string inputName = "";
+    bool inputMode = true;
+    SDL_StartTextInput(); // Enable text input
+
+    while (inputMode) {
+        while (SDL_PollEvent(e)) {
+            if (e->type == SDL_QUIT) {
+                inputMode = false;
+            } else if (e->type == SDL_KEYDOWN) {
+                if (e->key.keysym.sym == SDLK_RETURN) {
+                    inputMode = false; // Stop input when Enter key is pressed
+                } else if (e->key.keysym.sym == SDLK_BACKSPACE && !inputName.empty()) {
+                    inputName.pop_back(); // Backspace: remove the last character
+                }
+            } else if (e->type == SDL_TEXTINPUT) {
+                // Append entered text to the inputName
+                inputName += e->text.text;
+            }
+        }
+    }
+    SDL_StopTextInput();
+
+    return Node(inputName,x,y);
+}
+
 int main() {
 
     // Node
-    Node a = Node("A", 100,100);
-    Node b = Node("B", 200,200);
+    std::vector<Node> nodeVector;
 
-    Node c = Node("C", 500,350);
-    Node d = Node("D", 400,400);
-    Node f = Node("f", 150,50);
-    Edge edgeAB = Edge(&a,&b);
-    Edge edgeCD = Edge(&c, &d);
-    Edge edgeBD = Edge(&d,&b);
-    Edge edgeBF = Edge(&f, &b);
 
 
     if(!initGame()){
@@ -34,18 +54,20 @@ int main() {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
                 quit = true;
+            }else if(e.type == SDL_MOUSEBUTTONDOWN ){
+                if(e.button.button == SDL_BUTTON_LEFT){
+                   // a = Node("a ", e.button.x, e.button.y)
+                   nodeVector.push_back(create_Node(e.button.x, e.button.y,&e));
+                }
+
             }
         }
 
-        drawNode(a);
-        drawNode(b);
-        drawNode(c);
-        drawNode(d);
-        drawNode(f);
-        drawEdge(edgeCD);
-        drawEdge(edgeAB);
-        drawEdge(edgeBD);
-        drawEdge(edgeBF);
+        for(const auto & i : nodeVector){
+            drawNode(i);
+        }
+
+
         SDL_RenderPresent(AppConfig::RENDERER);
         SDL_Delay(10);
     }
@@ -54,3 +76,4 @@ int main() {
     return 0;
 
 }
+
