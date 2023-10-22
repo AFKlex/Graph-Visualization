@@ -8,8 +8,8 @@
 #include "header/Node.h"
 class Edge {
 public:
-    Node* firstNode;
-    Node* secondNode;
+    Node* A;
+    Node* B;
     Edge(Node* first ,Node* second);
 };
 

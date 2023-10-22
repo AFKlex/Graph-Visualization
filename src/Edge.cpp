@@ -4,6 +4,6 @@
 
 #include "header/Edge.h"
 Edge::Edge(Node* first, Node* second){
-    this->firstNode = first;
-    this->secondNode = second;
+    this->A = first;
+    this->B = second;
 }
