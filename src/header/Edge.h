@@ -7,6 +7,7 @@
 
 #include "header/Node.h"
 class Edge {
+public:
     Node* firstNode;
     Node* secondNode;
     Edge(Node* first ,Node* second);
