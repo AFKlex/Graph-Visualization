@@ -23,11 +23,12 @@ bool initFont(){
         std::cout << "Failed to load Font" << std::endl;
         success = false;
     }
-    AppConfig::FONT = TTF_OpenFont("../assets/Gothic.ttf", 200);
+    AppConfig::FONT = TTF_OpenFont("../assets/Gothic.ttf", 24);
     if(AppConfig::FONT == nullptr){
         std::cout << "Failed to load Font! TTF_Error: " << TTF_GetError() << std::endl;
         success = false;
     }
+    TTF_SetFontStyle(AppConfig::FONT, TTF_STYLE_NORMAL);
 
     return success;
 }
@@ -136,11 +137,15 @@ void drawNode(Node node){
     SDL_RenderDrawCircle(node.x, node.y,AppConfig::NODE_RADIUS);
     loadTextTexture(node);
 
-    SDL_Rect messageRect; //create a rect
-    messageRect.x = node.x-10;  //controls the rect's x coordinate
-    messageRect.y = node.y-10; // controls the rect's y coordinte
-    messageRect.w = 20; // controls the width of the rect
-    messageRect.h = 20;
+    // Calculate the width and height of the text
+    int textWidth, textHeight;
+    TTF_SizeText(AppConfig::FONT, node.name.c_str(), &textWidth, &textHeight);
+
+    SDL_Rect messageRect;
+    messageRect.x = node.x - textWidth / 2; // Centered horizontally
+    messageRect.y = node.y - textHeight / 2; // Centered vertically
+    messageRect.w = textWidth;
+    messageRect.h = textHeight;
 
     SDL_RenderCopy(AppConfig::RENDERER, AppConfig::textTexture, nullptr, &messageRect);
 
