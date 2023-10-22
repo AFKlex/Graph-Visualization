@@ -20,6 +20,8 @@ namespace AppConfig{
     extern TTF_Font* FONT;
     extern SDL_Texture *textTexture;
 
+    extern const int NODE_RADIUS;
+
 
 }
 

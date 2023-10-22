@@ -14,4 +14,6 @@ namespace AppConfig{
     TTF_Font* FONT = nullptr;
 
     SDL_Texture *textTexture = nullptr;
+
+    const int NODE_RADIUS= 15;
 }
