@@ -133,7 +133,7 @@ bool loadTextTexture(Node node){
 
 void drawNode(Node node){
     SDL_SetRenderDrawColor(AppConfig::RENDERER,255,0,0,0);
-    SDL_RenderDrawCircle(node.x, node.y,15);
+    SDL_RenderDrawCircle(node.x, node.y,AppConfig::NODE_RADIUS);
     loadTextTexture(node);
 
     SDL_Rect messageRect; //create a rect
@@ -145,6 +145,10 @@ void drawNode(Node node){
     SDL_RenderCopy(AppConfig::RENDERER, AppConfig::textTexture, nullptr, &messageRect);
 
 
+}
+
+void drawEdge(Edge edge){
+    SDL_RenderDrawLine(AppConfig::RENDERER,edge.firstNode->x+AppConfig::NODE_RADIUS, edge.firstNode->y+AppConfig::NODE_RADIUS, edge.secondNode->x, edge.secondNode->y);
 }
 
 void destroyGame(){

@@ -5,11 +5,14 @@
 #include "header/window.h"
 #include "header/Node.h"
 #include "header/AppConfig.h"
+#include "header/Edge.h"
 int main() {
 
     // Node
     Node a = Node("A", 100,100);
-    Node b = Node("B", 200,100);
+    Node b = Node("B", 200,200);
+    Edge edge = Edge(&a,&b);
+
 
     if(!initGame()){
         std::cout << "Failed to init the Game! SDL Error:  " << SDL_GetError()<< std::endl;
@@ -29,6 +32,7 @@ int main() {
 
         drawNode(a);
         drawNode(b);
+        drawEdge(edge);
         SDL_RenderPresent(AppConfig::RENDERER);
         SDL_Delay(10);
     }
