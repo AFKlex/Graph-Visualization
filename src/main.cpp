@@ -11,7 +11,14 @@ int main() {
     // Node
     Node a = Node("A", 100,100);
     Node b = Node("B", 200,200);
-    Edge edge = Edge(&a,&b);
+
+    Node c = Node("C", 500,350);
+    Node d = Node("D", 400,400);
+    Node f = Node("f", 150,50);
+    Edge edgeAB = Edge(&a,&b);
+    Edge edgeCD = Edge(&c, &d);
+    Edge edgeBD = Edge(&d,&b);
+    Edge edgeBF = Edge(&f, &b);
 
 
     if(!initGame()){
@@ -32,7 +39,13 @@ int main() {
 
         drawNode(a);
         drawNode(b);
-        drawEdge(edge);
+        drawNode(c);
+        drawNode(d);
+        drawNode(f);
+        drawEdge(edgeCD);
+        drawEdge(edgeAB);
+        drawEdge(edgeBD);
+        drawEdge(edgeBF);
         SDL_RenderPresent(AppConfig::RENDERER);
         SDL_Delay(10);
     }

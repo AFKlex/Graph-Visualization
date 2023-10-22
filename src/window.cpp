@@ -23,7 +23,7 @@ bool initFont(){
         std::cout << "Failed to load Font" << std::endl;
         success = false;
     }
-    AppConfig::FONT = TTF_OpenFont("../assets/Gothic.ttf", 100);
+    AppConfig::FONT = TTF_OpenFont("../assets/Gothic.ttf", 200);
     if(AppConfig::FONT == nullptr){
         std::cout << "Failed to load Font! TTF_Error: " << TTF_GetError() << std::endl;
         success = false;
@@ -148,7 +148,53 @@ void drawNode(Node node){
 }
 
 void drawEdge(Edge edge){
-    SDL_RenderDrawLine(AppConfig::RENDERER,edge.firstNode->x+AppConfig::NODE_RADIUS, edge.firstNode->y+AppConfig::NODE_RADIUS, edge.secondNode->x, edge.secondNode->y);
+    int ax = edge.A->x;
+    int ay = edge.A->y;
+
+    int bx = edge.B->x;
+    int by = edge.B->y;
+
+    int ax_increment = 0;
+    int ay_increment = 0;
+    int bx_increment = 0;
+    int by_increment = 0;
+
+    if(ax <= bx){
+        // Node A is left of node B
+        if(ay <= by){
+            // Node A over B
+            //std::cout << "Node A left over B" << std::endl;
+            ax_increment = AppConfig::NODE_RADIUS-4;
+            ay_increment = AppConfig::NODE_RADIUS-4;
+            bx_increment = -(AppConfig::NODE_RADIUS-4);
+            by_increment = -(AppConfig::NODE_RADIUS-4);
+        }else{
+            // Node A is under B
+            std::cout << "Node A left under B" << std::endl;
+            ax_increment = AppConfig::NODE_RADIUS;
+        }
+    }else{
+        // Node A is right of node B
+        if(ay <= by){
+            // Node A over B
+            //std::cout << "Node A right over B" << std::endl;
+            bx_increment = (AppConfig::NODE_RADIUS-4);
+            by_increment = -(AppConfig::NODE_RADIUS-4);
+            ax_increment = -(AppConfig::NODE_RADIUS-4);
+            ay_increment = +(AppConfig::NODE_RADIUS-4);
+        }else{
+            // Node A is under B
+            //std::cout << "Node A right under B" << std::endl;
+            bx_increment = (AppConfig::NODE_RADIUS-4);
+            by_increment = (AppConfig::NODE_RADIUS-4);
+            ax_increment = -(AppConfig::NODE_RADIUS-4);
+            ay_increment = -(AppConfig::NODE_RADIUS-4);
+
+        }
+
+    }
+
+    SDL_RenderDrawLine(AppConfig::RENDERER, ax+ax_increment,ay+ ay_increment, bx + bx_increment, by+by_increment);
 }
 
 void destroyGame(){
