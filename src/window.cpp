@@ -126,7 +126,7 @@ bool loadTextTexture(Node node){
         std::cout << "Failed to load Message! SDL_Error: " << SDL_GetError() << std::endl;
         success = false;
     }else{
-        free(surfaceMessage);
+        SDL_FreeSurface(surfaceMessage);
     }
     return success;
 }
@@ -170,7 +170,7 @@ void drawEdge(Edge edge){
             by_increment = -(AppConfig::NODE_RADIUS-4);
         }else{
             // Node A is under B
-            std::cout << "Node A left under B" << std::endl;
+            //std::cout << "Node A left under B" << std::endl;
             ax_increment = AppConfig::NODE_RADIUS;
         }
     }else{
@@ -202,6 +202,6 @@ void destroyGame(){
     SDL_DestroyRenderer(AppConfig::RENDERER);
     AppConfig::WINDOW = nullptr;
     AppConfig::RENDERER = nullptr;
-    AppConfig::SCREEN_SURFACE= nullptr;
+    SDL_FreeSurface(AppConfig::SCREEN_SURFACE);
     SDL_Quit();
 }
