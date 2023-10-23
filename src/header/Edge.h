@@ -12,6 +12,6 @@ public:
     Node* B;
     Edge(Node* first ,Node* second);
 };
-void createEdgeBetweenNodes(int x, int y, Node *firstNode, Node *secondNode, std::vector<Edge> edgeVector ,std::vector<Node> nodeVector ,bool oneNodeSelected);
+void createEdgeBetweenNodes(int x, int y, Node *&firstNode, Node *&secondNode, std::vector<Edge>* edgeVector ,std::vector<Node>* nodeVector ,bool *oneNodeSelected);
 
 #endif //GRAPH_VISUALIZATION_EDGE_H
