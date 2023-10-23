@@ -8,6 +8,8 @@
 #include "header/Edge.h"
 #include<vector>
 
+
+
 void modeDeactivation(bool *inputMode, bool *connectionMode){
     *inputMode = false;
     *connectionMode = false;
@@ -17,8 +19,10 @@ int main() {
 
     // Node
     std::vector<Node> nodeVector;
+    std::vector<Edge> edgeVector;
 
-
+    Node *firstNode = nullptr;
+    Node *secondNode = nullptr;
 
     if(!initGame()){
         std::cout << "Failed to init the Game! SDL Error:  " << SDL_GetError()<< std::endl;
@@ -29,6 +33,8 @@ int main() {
     bool quit = false;
     bool nodeInsertMode = false;
     bool  connectionMode = false;
+    bool oneNodeSelected = false;
+
     SDL_Event e;
 
     while (!quit){
@@ -44,8 +50,8 @@ int main() {
                     }
                 }else if(e.key.keysym.sym == SDLK_c){
                     if(!connectionMode){
-                        connectionMode= true;
                         modeDeactivation(&nodeInsertMode, &connectionMode);
+                        connectionMode= true;
                         std::cout << "You are now in node connection mode" << std::endl;
                     }
                 }else if(e.key.keysym.sym ==SDLK_ESCAPE){
@@ -59,9 +65,7 @@ int main() {
                    append_Node(&nodeVector,e.button.x, e.button.y,&e);
 
                 }else if(e.button.button == SDL_BUTTON_LEFT and connectionMode){
-                    // Connect two nodes
-                    checkNodeExistAtPosition(&nodeVector,e.button.x, e.button.y);
-
+                    createEdgeBetweenNodes(e.button.x, e.button.y, firstNode, secondNode, edgeVector, nodeVector, oneNodeSelected);
                 }
 
             }
@@ -69,6 +73,9 @@ int main() {
 
         for(const auto & i : nodeVector){
             drawNode(i);
+        }
+        for(const auto & i : edgeVector){
+            drawEdge(i);
         }
 
 
