@@ -7,7 +7,7 @@
 #include "header/AppConfig.h"
 #include "header/Edge.h"
 #include<vector>
-Node create_Node(int x, int y, SDL_Event * e){
+void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e){
     std::cout << "Type the name in the Graph and press enter. Backspace to delete a character is allowed!"<< std::endl;
     std::string inputName = "";
     bool inputMode = true;
@@ -20,8 +20,12 @@ Node create_Node(int x, int y, SDL_Event * e){
             } else if (e->type == SDL_KEYDOWN) {
                 if (e->key.keysym.sym == SDLK_RETURN) {
                     inputMode = false; // Stop input when Enter key is pressed
+                    nodes->emplace_back(inputName,x,y);
                 } else if (e->key.keysym.sym == SDLK_BACKSPACE && !inputName.empty()) {
                     inputName.pop_back(); // Backspace: remove the last character
+                }else if (e->key.keysym.sym == SDLK_ESCAPE){
+                    inputMode = false;
+                    std::cout << "Abort Node creation" << std::endl;
                 }
             } else if (e->type == SDL_TEXTINPUT) {
                 // Append entered text to the inputName
@@ -30,8 +34,6 @@ Node create_Node(int x, int y, SDL_Event * e){
         }
     }
     SDL_StopTextInput();
-
-    return Node(inputName,x,y);
 }
 
 int main() {
@@ -48,16 +50,28 @@ int main() {
     }
 
     bool quit = false;
+    bool nodeInsertMode = false;
     SDL_Event e;
 
     while (!quit){
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
                 quit = true;
-            }else if(e.type == SDL_MOUSEBUTTONDOWN ){
+            }else if(e.type == SDL_KEYDOWN){
+                if(e.key.keysym.sym == SDLK_n){
+                    if(!nodeInsertMode){
+                        nodeInsertMode= true;
+                        std::cout << "You are now in node insert mode" << std::endl;
+                    }
+                }else if(e.key.keysym.sym ==SDLK_ESCAPE){
+                    nodeInsertMode = false;
+                    std::cout << "You are in default mode" << std::endl;
+                }
+            }
+            else if(e.type == SDL_MOUSEBUTTONDOWN and nodeInsertMode){
                 if(e.button.button == SDL_BUTTON_LEFT){
                    // a = Node("a ", e.button.x, e.button.y)
-                   nodeVector.push_back(create_Node(e.button.x, e.button.y,&e));
+                   append_Node(&nodeVector,e.button.x, e.button.y,&e);
                 }
 
             }
