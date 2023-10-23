@@ -65,7 +65,7 @@ int main() {
                    append_Node(&nodeVector,e.button.x, e.button.y,&e);
 
                 }else if(e.button.button == SDL_BUTTON_LEFT and connectionMode){
-                    createEdgeBetweenNodes(e.button.x, e.button.y, firstNode, secondNode, edgeVector, nodeVector, oneNodeSelected);
+                    createEdgeBetweenNodes(e.button.x, e.button.y, firstNode, secondNode, &edgeVector, &nodeVector, &oneNodeSelected);
                 }
 
             }
