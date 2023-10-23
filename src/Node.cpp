@@ -40,19 +40,19 @@ void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e){
 
 Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y){
     int circleRadius = AppConfig::NODE_RADIUS/2+5;
-    std::cout <<"X and y " << x << " "<<y << std::endl;
+    //std::cout <<"X and y " << x << " "<<y << std::endl;
     for(Node &node : *nodeVector){
-        std::cout << node.x << " " << node.y << std::endl;
+        //std::cout << node.x << " " << node.y << std::endl;
 
         if(node.x - circleRadius  <= x && x <= node.x + circleRadius){
             if(node.y - circleRadius  <= y && y <= circleRadius  + node.y){
-                std::cout << "Found Node at position" << std::endl;
+                //std::cout << "Found Node at position" << std::endl;
                 return &node;
             }else{
-                std::cout << "Found no Node at position" << std::endl;
+               // std::cout << "Found no Node at position" << std::endl;
             }
         }else{
-            std::cout << "Found no Node at position" << std::endl;
+            //std::cout << "Found no Node at position" << std::endl;
         }
     }
     return nullptr;
