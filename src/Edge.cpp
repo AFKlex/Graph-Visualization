@@ -26,6 +26,4 @@ void createEdgeBetweenNodes(int x, int y, Node *&firstNode, Node *&secondNode, s
     }else{
         std::cout << "No node was picked!" << std::endl;
     }
-
-
 }

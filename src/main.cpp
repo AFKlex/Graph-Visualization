@@ -7,9 +7,6 @@
 #include "header/AppConfig.h"
 #include "header/Edge.h"
 #include<vector>
-
-
-
 void modeDeactivation(bool *inputMode, bool *connectionMode){
     *inputMode = false;
     *connectionMode = false;
@@ -48,10 +45,10 @@ int main() {
                         nodeInsertMode= true;
                         std::cout << "You are now in node insert mode" << std::endl;
                     }
-                }else if(e.key.keysym.sym == SDLK_c){
-                    if(!connectionMode){
+                }else if(e.key.keysym.sym == SDLK_c) {
+                    if (!connectionMode) {
                         modeDeactivation(&nodeInsertMode, &connectionMode);
-                        connectionMode= true;
+                        connectionMode = true;
                         std::cout << "You are now in node connection mode" << std::endl;
                     }
                 }else if(e.key.keysym.sym ==SDLK_ESCAPE){
