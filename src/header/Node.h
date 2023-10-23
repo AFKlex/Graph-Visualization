@@ -14,7 +14,9 @@ public:
     std::string name;
     int x,y;
     Node(std::string name, int x, int y);
+    bool operator==(const Node& other) const;
 };
+
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e);
 Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y);
 

@@ -9,6 +9,12 @@ Node::Node(std::string name, int x, int y){
     this->name = name;
 }
 
+// Implementation of the equality operator (==) for Node objects
+bool Node::operator==(const Node& other) const {
+    return (this->x == other.x) && (this->y == other.y) && (this->name == other.name);
+}
+
+
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e){
     std::cout << "Type the name in the Graph and press enter. Backspace to delete a character is allowed!"<< std::endl;
     std::string inputName = "";
@@ -56,5 +62,12 @@ Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y){
         }
     }
     return nullptr;
+}
+
+void removeNodeFromNodeVector(std::vector<Node>* nodeVector, Node nodeToRemove){
+    int index_to_Remove = 0;
+    for(int i = 0; i < nodeVector->size(); i++){
+        if ((*nodeVector)[i] == nodeToRemove){}
+    }
 }
 
