@@ -164,7 +164,9 @@ void drawEdge(Edge edge){
     int bx_increment = 0;
     int by_increment = 0;
 
-    if(ax <= bx){
+    if(edge.A == edge.B){
+        SDL_RenderDrawCircle(ax-AppConfig::NODE_RADIUS-2,ay -AppConfig::NODE_RADIUS-2,AppConfig::NODE_RADIUS-5);
+    }else if(ax <= bx){
         // Node A is left of node B
         if(ay <= by){
             // Node A over B
