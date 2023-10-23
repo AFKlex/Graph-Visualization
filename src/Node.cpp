@@ -64,3 +64,19 @@ Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y){
     return nullptr;
 }
 
+void removeNodeFromNodeVector(std::vector<Node>* nodeVector, const Node& nodeToRemove){
+    int index_to_Remove = -1;
+    for(int i = 0; i < nodeVector->size(); i++){
+        if ((*nodeVector)[i] == nodeToRemove){
+            index_to_Remove = i;
+        }
+    }
+
+    if(index_to_Remove != -1){
+        *nodeVector->erase(nodeVector->begin() + index_to_Remove);
+    }else{
+        std::cout << "No element was found. So nothing was removed" << std::endl;
+    }
+
+}
+
