@@ -7,6 +7,7 @@
 #include<iostream>
 #include<vector>
 #include<SDL2/SDL.h>
+#include"header/AppConfig.h"
 
 class Node {
 public:
@@ -15,6 +16,7 @@ public:
     Node(std::string name, int x, int y);
 };
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e);
+Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y);
 
 
 #endif //GRAPH_VISUALIZATION_NODE_H
