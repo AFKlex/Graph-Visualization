@@ -64,10 +64,3 @@ Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y){
     return nullptr;
 }
 
-void removeNodeFromNodeVector(std::vector<Node>* nodeVector, Node nodeToRemove){
-    int index_to_Remove = 0;
-    for(int i = 0; i < nodeVector->size(); i++){
-        if ((*nodeVector)[i] == nodeToRemove){}
-    }
-}
-
