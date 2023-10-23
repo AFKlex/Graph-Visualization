@@ -72,6 +72,7 @@ void removeNodeFromNodeVector(std::vector<Node>* nodeVector, const Node *nodeToR
         }
     }
     if(index_to_Remove != -1){
+        std::cout << "Remove node" << std::endl;
         *nodeVector->erase(nodeVector->begin() + index_to_Remove);
     }else{
         std::cout << "No element was found. So nothing was removed" << std::endl;

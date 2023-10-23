@@ -76,7 +76,9 @@ int main() {
                 }else if(e.button.button == SDL_BUTTON_LEFT and removeMode){
                     Node *nodeToRemove = checkNodeExistAtPosition(&nodeVector,e.button.x,e.button.y);
                     if(nodeToRemove != nullptr){
+                        removeEdgesFromVector(&edgeVector, nodeToRemove);
                         removeNodeFromNodeVector(&nodeVector,nodeToRemove);
+                        SDL_RenderPresent(AppConfig::RENDERER);
                     }
                 }
 

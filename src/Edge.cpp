@@ -27,3 +27,17 @@ void createEdgeBetweenNodes(int x, int y, Node *&firstNode, Node *&secondNode, s
         std::cout << "No node was picked!" << std::endl;
     }
 }
+
+void removeEdgesFromVector(std::vector<Edge>* edgeVector, Node* nodeToRemove){
+    std::vector<int> indexToRemove;
+    for(int i = 0; i<edgeVector->size(); i++){
+        if(edgeVector->at(i).A == nodeToRemove || edgeVector->at(i).B == nodeToRemove){
+            indexToRemove.push_back(i);
+        }
+    }
+
+    for(int i : indexToRemove){
+        edgeVector->erase(edgeVector->begin()+i);
+    }
+
+}
