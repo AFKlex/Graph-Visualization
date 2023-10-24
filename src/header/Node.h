@@ -16,6 +16,7 @@ public:
     int x,y,degree;
     Node(std::string name, int x, int y);
     bool operator==(const Node& other) const;
+    void setDegree(int degree);
 };
 
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e);
