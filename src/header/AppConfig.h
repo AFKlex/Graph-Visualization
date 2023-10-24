@@ -9,10 +9,10 @@
 #include<SDL2/SDL_ttf.h>
 
 struct Color {
-    int red;
-    int green;
-    int blue;
-    int alpha;
+    Uint8 red;
+    Uint8 green;
+    Uint8 blue;
+    Uint8 alpha;
 };
 
 namespace AppConfig{
