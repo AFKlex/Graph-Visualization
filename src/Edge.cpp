@@ -28,16 +28,23 @@ void createEdgeBetweenNodes(int x, int y, Node *&firstNode, Node *&secondNode, s
     }
 }
 
-void removeEdgesFromVector(std::vector<Edge>* edgeVector, Node* nodeToRemove){
-    std::vector<int> indexToRemove;
-    for(int i = 0; i<edgeVector->size(); i++){
-        if(edgeVector->at(i).A == nodeToRemove || edgeVector->at(i).B == nodeToRemove){
-            indexToRemove.push_back(i);
+void removeEdgesFromVector(std::vector<Edge>* edgeVector, Node* nodeToRemove) {
+    std::vector<int> indicesToRemove;
+    if(edgeVector != nullptr && nodeToRemove != nullptr){
+        for (int i = edgeVector->size() - 1; i >= 0; i--) {
+            if (edgeVector->at(i).A == nodeToRemove || edgeVector->at(i).B == nodeToRemove) {
+                indicesToRemove.push_back(i);
+            }
         }
+
+        for (int i : indicesToRemove) {
+            edgeVector->erase(edgeVector->begin() + i);
+            std::cout << "Vector Size: " << edgeVector->size() <<std::endl;
+        }
+    }else{
+        std::cout << "Could not Remove Edge from vector. Either noteToRemove or edgeVector was a nullptr" << std::endl;
     }
 
-    for(int i : indexToRemove){
-        edgeVector->erase(edgeVector->begin()+i);
-    }
+
 
 }
