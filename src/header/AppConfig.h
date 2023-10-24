@@ -8,6 +8,12 @@
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_ttf.h>
 
+struct Color {
+    int red;
+    int green;
+    int blue;
+};
+
 namespace AppConfig{
     extern SDL_Window * WINDOW;
     extern SDL_Surface *SCREEN_SURFACE;
@@ -17,7 +23,8 @@ namespace AppConfig{
     extern const int WINDOW_HEIGHT;
 
     extern const SDL_Color TEXT_COLOR;
-    extern const SDL_Color BACKGROUND_COLOR;
+    extern const Color BACKGROUND_COLOR;
+    extern const Color NODE_COLOR;
     extern TTF_Font* FONT;
     extern SDL_Texture *textTexture;
 
