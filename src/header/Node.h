@@ -22,6 +22,7 @@ public:
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e);
 Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y);
 void removeNodeFromNodeVector(std::vector<Node>* nodeVector, const Node *nodeToRemove);
+void printNodeDegree(std::vector<Node> *vectorNodes);
 
 
 #endif //GRAPH_VISUALIZATION_NODE_H

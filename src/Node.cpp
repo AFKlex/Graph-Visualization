@@ -81,3 +81,9 @@ void removeNodeFromNodeVector(std::vector<Node>*nodeVector, const Node *nodeToRe
 
 }
 
+void printNodeDegree(std::vector<Node> *vectorNodes){
+    for(const auto& node : *vectorNodes){
+        std::cout << "Degree of Node " << node.name << " : " << node.degree << std::endl;
+    }
+}
+
