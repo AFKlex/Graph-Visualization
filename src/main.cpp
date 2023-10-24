@@ -7,6 +7,7 @@
 #include "header/AppConfig.h"
 #include "header/Edge.h"
 #include<vector>
+#include"header/Graphs.h"
 
 void modeDeactivation(bool *inputMode, bool *connectionMode, bool *removeMode, bool *functionMode){
     *inputMode = false;
@@ -69,6 +70,7 @@ int main() {
                         std::cout << "You are now in remove mode!" << std::endl;
                     }
                 }else if(e.key.keysym.sym == SDLK_a && functionMode){
+                    createAdjacencyMatrix(&nodeVector, &edgeVector);
 
 
                 }else if(e.key.keysym.sym ==SDLK_ESCAPE){
@@ -97,6 +99,7 @@ int main() {
             }
         }
 
+        updateNodeDegree(&edgeVector,&nodeVector);
         for(const auto & i : nodeVector){
             drawNode(i);
         }
