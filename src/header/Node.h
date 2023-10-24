@@ -13,7 +13,7 @@
 class Node {
 public:
     std::string name;
-    int x,y;
+    int x,y,degree;
     Node(std::string name, int x, int y);
     bool operator==(const Node& other) const;
 };

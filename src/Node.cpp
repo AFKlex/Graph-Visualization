@@ -6,6 +6,8 @@
 Node::Node(std::string name, int x, int y){
     this->x = x;
     this->y = y;
+    this->degree = 0;
+
     this->name = name;
 }
 
@@ -13,7 +15,6 @@ Node::Node(std::string name, int x, int y){
 bool Node::operator==(const Node& other) const {
     return (this->x == other.x) && (this->y == other.y);
 }
-
 
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e){
     std::cout << "Type the name in the Graph and press enter. Backspace to delete a character is allowed!"<< std::endl;
