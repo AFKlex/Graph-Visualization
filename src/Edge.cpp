@@ -48,3 +48,11 @@ void removeEdgesFromVector(std::vector<Edge>* edgeVector, Node* nodeToRemove) {
 
 
 }
+
+bool checkIfEdgeBetweenToNodes(std::vector<Edge> *edgeVector, Node* a, Node* b){
+    for (auto &i: *edgeVector)
+        if ((i.A == a && i.B == b) || (i.A == b && i.B == a))
+            return true;
+
+    return false;
+}
