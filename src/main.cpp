@@ -7,10 +7,12 @@
 #include "header/AppConfig.h"
 #include "header/Edge.h"
 #include<vector>
-void modeDeactivation(bool *inputMode, bool *connectionMode, bool *removeMode){
+
+void modeDeactivation(bool *inputMode, bool *connectionMode, bool *removeMode, bool *functionMode){
     *inputMode = false;
     *connectionMode = false;
     *removeMode = false;
+    *functionMode= false;
 }
 
 int main() {
@@ -32,6 +34,7 @@ int main() {
     bool nodeInsertMode = false;
     bool  connectionMode = false;
     bool oneNodeSelected = false;
+    bool  functionMode = false;
     bool removeMode = false;
 
     SDL_Event e;
@@ -43,26 +46,33 @@ int main() {
             }else if(e.type == SDL_KEYDOWN){
                 if(e.key.keysym.sym == SDLK_n){
                     if(!nodeInsertMode){
-                        modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode );
+                        modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode,&functionMode );
                         nodeInsertMode= true;
                         std::cout << "You are now in node insert mode" << std::endl;
                     }
                 }else if(e.key.keysym.sym == SDLK_c) {
                     if (!connectionMode) {
-                        modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode );
+                        modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode,&functionMode );
                         connectionMode = true;
                         std::cout << "You are now in node connection mode" << std::endl;
                     }
                 }else if(e.key.keysym.sym == SDLK_r){
                     if(!removeMode){
-                        modeDeactivation(&nodeInsertMode, &connectionMode, &removeMode);
+                        modeDeactivation(&nodeInsertMode, &connectionMode, &removeMode,&functionMode);
                         removeMode = true;
                         std::cout << "You are now in remove mode!" << std::endl;
                     }
+                }else if(e.key.keysym.sym == SDLK_f) {
+                    if (!removeMode) {
+                        modeDeactivation(&nodeInsertMode, &connectionMode, &removeMode, &functionMode);
+                        functionMode = true;
+                        std::cout << "You are now in remove mode!" << std::endl;
+                    }
+                }else if(e.key.keysym.sym == SDLK_a && functionMode){
 
 
                 }else if(e.key.keysym.sym ==SDLK_ESCAPE){
-                    modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode );
+                    modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode ,&functionMode);
                     std::cout << "You are in default mode" << std::endl;
                 }
             }
@@ -84,7 +94,6 @@ int main() {
                         SDL_SetRenderDrawColor(AppConfig::RENDERER, AppConfig::NODE_COLOR.red, AppConfig::NODE_COLOR.green, AppConfig::NODE_COLOR.blue, AppConfig::NODE_COLOR.alpha);
                     }
                 }
-
             }
         }
 
