@@ -17,6 +17,7 @@ namespace AppConfig{
     extern const int WINDOW_HEIGHT;
 
     extern const SDL_Color TEXT_COLOR;
+    extern const SDL_Color BACKGROUND_COLOR;
     extern TTF_Font* FONT;
     extern SDL_Texture *textTexture;
 
