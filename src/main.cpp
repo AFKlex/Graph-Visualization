@@ -78,7 +78,10 @@ int main() {
                     if(nodeToRemove != nullptr){
                         removeEdgesFromVector(&edgeVector, nodeToRemove);
                         removeNodeFromNodeVector(&nodeVector,nodeToRemove);
-                        SDL_RenderPresent(AppConfig::RENDERER);
+
+                        SDL_SetRenderDrawColor(AppConfig::RENDERER, AppConfig::BACKGROUND_COLOR.red, AppConfig::BACKGROUND_COLOR.green, AppConfig::BACKGROUND_COLOR.blue, AppConfig::BACKGROUND_COLOR.alpha ); // Set the clear color to black
+                        SDL_RenderClear(AppConfig::RENDERER);
+                        SDL_SetRenderDrawColor(AppConfig::RENDERER, AppConfig::NODE_COLOR.red, AppConfig::NODE_COLOR.green, AppConfig::NODE_COLOR.blue, AppConfig::NODE_COLOR.alpha);
                     }
                 }
 
