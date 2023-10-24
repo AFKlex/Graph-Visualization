@@ -67,11 +67,13 @@ int main() {
                     if (!removeMode) {
                         modeDeactivation(&nodeInsertMode, &connectionMode, &removeMode, &functionMode);
                         functionMode = true;
-                        std::cout << "You are now in remove mode!" << std::endl;
+                        std::cout << "You are now in function mode!" << std::endl;
                     }
                 }else if(e.key.keysym.sym == SDLK_a && functionMode){
                     createAdjacencyMatrix(&nodeVector, &edgeVector);
-
+                }else if(e.key.keysym.sym == SDLK_d && functionMode){
+                    updateNodeDegree(&edgeVector,&nodeVector);
+                    printNodeDegree(&nodeVector);
 
                 }else if(e.key.keysym.sym ==SDLK_ESCAPE){
                     modeDeactivation(&nodeInsertMode, &connectionMode,&removeMode ,&functionMode);
@@ -98,8 +100,6 @@ int main() {
                 }
             }
         }
-
-        updateNodeDegree(&edgeVector,&nodeVector);
         for(const auto & i : nodeVector){
             drawNode(i);
         }
