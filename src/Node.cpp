@@ -11,7 +11,7 @@ Node::Node(std::string name, int x, int y){
 
 // Implementation of the equality operator (==) for Node objects
 bool Node::operator==(const Node& other) const {
-    return (this->x == other.x) && (this->y == other.y) && (this->name == other.name);
+    return (this->x == other.x) && (this->y == other.y);
 }
 
 
@@ -64,17 +64,13 @@ Node* checkNodeExistAtPosition(std::vector<Node> *nodeVector, int x , int y){
     return nullptr;
 }
 
-void removeNodeFromNodeVector(std::vector<Node>* nodeVector, const Node *nodeToRemove){
-    int index_to_Remove = -1;
-    for(int i = 0; i < nodeVector->size(); i++){
-        if ((*nodeVector)[i] == *nodeToRemove){
-            index_to_Remove = i;
-        }
-    }
-    if(index_to_Remove != -1){
-        std::cout << "Remove node" << std::endl;
-        *nodeVector->erase(nodeVector->begin() + index_to_Remove);
-    }else{
+void removeNodeFromNodeVector(std::vector<Node>*nodeVector, const Node *nodeToRemove){
+    auto it = std::find(nodeVector->begin(), nodeVector->end(), *nodeToRemove);
+    if (it != nodeVector->end()) {
+        std::cout << "Remove node!" << std::endl;
+        nodeVector->erase(it);
+        //std::cout << "Vector Size: " << nodeVector->size() <<std::endl;
+    } else {
         std::cout << "No element was found. So nothing was removed" << std::endl;
     }
 

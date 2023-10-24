@@ -8,6 +8,7 @@
 #include<vector>
 #include<SDL2/SDL.h>
 #include"header/AppConfig.h"
+#include <algorithm>
 
 class Node {
 public:
