@@ -133,7 +133,7 @@ bool loadTextTexture(Node node){
 }
 
 void drawNode(Node node){
-    SDL_SetRenderDrawColor(AppConfig::RENDERER,255,0,0,0);
+    SDL_SetRenderDrawColor(AppConfig::RENDERER,AppConfig::NODE_COLOR.red,AppConfig::NODE_COLOR.green, AppConfig::NODE_COLOR.blue, AppConfig::NODE_COLOR.alpha);
     SDL_RenderDrawCircle(node.x, node.y,AppConfig::NODE_RADIUS);
     loadTextTexture(node);
 
