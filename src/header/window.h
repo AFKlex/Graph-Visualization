@@ -5,6 +5,8 @@
 #include "header/Node.h"
 #include<SDL2/SDL_ttf.h>
 #include "header/Edge.h"
+#include<string>
+#include<cmath>
 #ifndef GRAPH_VISUALIZATION_WINDOW_H
 #define GRAPH_VISUALIZATION_WINDOW_H
 bool initGame();

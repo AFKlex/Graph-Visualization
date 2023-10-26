@@ -111,7 +111,7 @@ SDL_RenderDrawCircle(int x, int y, int radius)
     return status;
 }
 
-bool loadTextTexture(Node node){
+bool loadNodeTextTexture(Node node){
     bool  success = true;
     SDL_Surface* surfaceMessage = TTF_RenderText_Solid(AppConfig::FONT, node.name.c_str(), AppConfig::TEXT_COLOR);
     if(surfaceMessage == nullptr){
@@ -132,10 +132,31 @@ bool loadTextTexture(Node node){
     return success;
 }
 
+bool loadEdgeTexture(Edge edge){
+    bool  success = true;
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(AppConfig::FONT, std::to_string(edge.weight).c_str()  , AppConfig::TEXT_COLOR);
+    if(surfaceMessage == nullptr){
+        std::cout << "Failed to load SurfaceMessage! SDL_Error: " << SDL_GetError() << std::endl;
+        success = false ;
+    }
+    if(AppConfig::weightTexture != nullptr){
+        SDL_DestroyTexture(AppConfig::weightTexture);
+    }
+    AppConfig::weightTexture = SDL_CreateTextureFromSurface(AppConfig::RENDERER, surfaceMessage);
+
+    if(AppConfig::weightTexture == nullptr){
+        std::cout << "Failed to load Message! SDL_Error: " << SDL_GetError() << std::endl;
+        success = false;
+    }else{
+        SDL_FreeSurface(surfaceMessage);
+    }
+    return success;
+}
+
 void drawNode(Node node){
     SDL_SetRenderDrawColor(AppConfig::RENDERER,AppConfig::NODE_COLOR.red,AppConfig::NODE_COLOR.green, AppConfig::NODE_COLOR.blue, AppConfig::NODE_COLOR.alpha);
     SDL_RenderDrawCircle(node.x, node.y,AppConfig::NODE_RADIUS);
-    loadTextTexture(node);
+    loadNodeTextTexture(node);
 
     // Calculate the width and height of the text
     int textWidth, textHeight;
@@ -152,56 +173,39 @@ void drawNode(Node node){
 
 }
 
-void drawEdge(Edge edge){
+void drawEdge(Edge edge) {
     int ax = edge.A->x;
     int ay = edge.A->y;
-
     int bx = edge.B->x;
     int by = edge.B->y;
 
-    int ax_increment = 0;
-    int ay_increment = 0;
-    int bx_increment = 0;
-    int by_increment = 0;
+    // Calculate the direction of the edge
+    int dx = bx - ax;
+    int dy = by - ay;
+
+    // Calculate the length of the edge
+    float length = sqrt(dx * dx + dy * dy);
+
+    // Normalize the direction
+    float normalized_dx = dx / length;
+    float normalized_dy = dy / length;
+
+    // Calculate the offset from the node center to the edge
+    int offset = AppConfig::NODE_RADIUS;
+
+    // Calculate the starting point for the edge
+    int start_x = ax + offset * normalized_dx;
+    int start_y = ay + offset * normalized_dy;
+
+    // Calculate the ending point for the edge
+    int end_x = bx - offset * normalized_dx;
+    int end_y = by - offset * normalized_dy;
 
     if(edge.A == edge.B){
         SDL_RenderDrawCircle(ax-AppConfig::NODE_RADIUS-2,ay -AppConfig::NODE_RADIUS-2,AppConfig::NODE_RADIUS-5);
-    }else if(ax <= bx){
-        // Node A is left of node B
-        if(ay <= by){
-            // Node A over B
-            //std::cout << "Node A left over B" << std::endl;
-            ax_increment = AppConfig::NODE_RADIUS-4;
-            ay_increment = AppConfig::NODE_RADIUS-4;
-            bx_increment = -(AppConfig::NODE_RADIUS-4);
-            by_increment = -(AppConfig::NODE_RADIUS-4);
-        }else{
-            // Node A is under B
-            //std::cout << "Node A left under B" << std::endl;
-            ax_increment = AppConfig::NODE_RADIUS;
-        }
     }else{
-        // Node A is right of node B
-        if(ay <= by){
-            // Node A over B
-            //std::cout << "Node A right over B" << std::endl;
-            bx_increment = (AppConfig::NODE_RADIUS-4);
-            by_increment = -(AppConfig::NODE_RADIUS-4);
-            ax_increment = -(AppConfig::NODE_RADIUS-4);
-            ay_increment = +(AppConfig::NODE_RADIUS-4);
-        }else{
-            // Node A is under B
-            //std::cout << "Node A right under B" << std::endl;
-            bx_increment = (AppConfig::NODE_RADIUS-4);
-            by_increment = (AppConfig::NODE_RADIUS-4);
-            ax_increment = -(AppConfig::NODE_RADIUS-4);
-            ay_increment = -(AppConfig::NODE_RADIUS-4);
-
-        }
-
+        SDL_RenderDrawLine(AppConfig::RENDERER, start_x, start_y, end_x, end_y);
     }
-
-    SDL_RenderDrawLine(AppConfig::RENDERER, ax+ax_increment,ay+ ay_increment, bx + bx_increment, by+by_increment);
 }
 
 void destroyGame(){
