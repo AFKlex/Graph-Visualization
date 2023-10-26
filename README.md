@@ -1,4 +1,5 @@
 # Graph Visualization Program
+
 ## Table of Contents
 - [Description](#description)
 - [Features](#features)
@@ -19,7 +20,13 @@ This C++ program is designed for creating and visualizing graphs using the SDL l
 - **Graph Visualization:** Nodes are displayed as circles, and edges are represented as lines connecting nodes.
 - **Clean Exit:** Users can exit the program gracefully by pressing the 'Escape' key.
 
+**Function Mode:**
+- **Adjacency Matrix Creation:** In function mode, press 'a' to create an adjacency matrix for the graph.
+- **Node Degree Calculation:** In function mode, press 'd' to calculate and print the degree of each node.
+- **Node Removal Mode:** Enter this mode to remove nodes and associated edges by clicking on them.
+
 ## Requirements
+To run this program, you'll need the following:
 - C++ compiler (C++11 or later)
 - SDL library (Simple DirectMedia Layer)
 - SDL_ttf library (for text rendering)
@@ -33,6 +40,9 @@ This C++ program is designed for creating and visualizing graphs using the SDL l
 ## Usage
 - Press 'n' to enter Node Insertion Mode. Click on the canvas to create nodes.
 - Press 'c' to enter Node Connection Mode. Click on two nodes to create an edge.
+- Press 'f' to enter function Mode. 
+    - Press 'a' in Function Mode to create an adjacency matrix.
+    - Press 'd' in Function Mode to calculate and print the degree of each node.
 - Press 'Escape' to exit any active mode and return to the default mode.
 - Click the 'X' button or press 'Ctrl + C' to exit the program.
 
@@ -43,7 +53,8 @@ The program's development is ongoing. Upcoming features and improvements include
 - Enhanced rendering for improved visualization.
 
 ## Contributing
-Contributions, bug reports, and feature requests are welcome. Feel free to submit issues or pull requests on the GitHub repository.
+Contributions, bug reports, and feature requests are welcome. Feel free to submit issues or pull requests on the [GitHub repository](https://github.com/your-repo-link).
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License.
+
