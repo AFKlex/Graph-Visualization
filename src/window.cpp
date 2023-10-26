@@ -205,6 +205,32 @@ void drawEdge(Edge edge) {
         SDL_RenderDrawCircle(ax-AppConfig::NODE_RADIUS-2,ay -AppConfig::NODE_RADIUS-2,AppConfig::NODE_RADIUS-5);
     }else{
         SDL_RenderDrawLine(AppConfig::RENDERER, start_x, start_y, end_x, end_y);
+
+        if(AppConfig::isWeightedGraph){
+            loadEdgeTexture(edge);
+            // Calculate the midpoint between start and end points
+            int midX = (start_x + end_x) / 2;
+            int midY = (start_y + end_y) / 2;
+
+            // Calculate the width and height of the text
+            int textWidth, textHeight;
+            TTF_SizeText(AppConfig::FONT, std::to_string(edge.weight).c_str(), &textWidth, &textHeight);
+
+            // Set an offset value (adjust as needed)
+            int xOffset = 15; // Adjust as needed
+            int yOffset = 15; // Adjust as needed
+
+            // Adjust the messageRect to position it away from the line
+            SDL_Rect messageRect;
+            messageRect.x = midX - textWidth / 2 + xOffset; // Offset horizontally
+            messageRect.y = midY - textHeight / 2 + yOffset; // Offset vertically
+            messageRect.w = textWidth;
+            messageRect.h = textHeight;
+
+            // Render the weight text at the calculated position
+            SDL_RenderCopy(AppConfig::RENDERER, AppConfig::weightTexture, nullptr, &messageRect);
+        }
+
     }
 }
 

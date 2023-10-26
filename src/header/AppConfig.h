@@ -19,6 +19,7 @@ namespace AppConfig{
     extern SDL_Window * WINDOW;
     extern SDL_Surface *SCREEN_SURFACE;
     extern SDL_Renderer *RENDERER;
+    extern bool isWeightedGraph;
 
     extern  const int WINDOW_WIDTH;
     extern const int WINDOW_HEIGHT;
@@ -28,6 +29,7 @@ namespace AppConfig{
     extern const Color NODE_COLOR;
     extern TTF_Font* FONT;
     extern SDL_Texture *textTexture;
+    extern SDL_Texture *weightTexture;
 
     extern const int NODE_RADIUS;
 

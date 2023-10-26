@@ -18,6 +18,17 @@ void modeDeactivation(bool *inputMode, bool *connectionMode, bool *removeMode, b
 
 int main() {
 
+    int input;
+    std::cout << "1. Weighted Graph \n" <<"2. Non-Weighted"<<  std::endl;
+    std::cin >> input;
+
+    if(input == 1 ){
+        std::cout << "Weighted Graph is true." << std::endl;
+        AppConfig::isWeightedGraph = true;
+    }
+
+
+
     // Node
     std::vector<Node> nodeVector;
     std::vector<Edge> edgeVector;
@@ -86,7 +97,7 @@ int main() {
                    append_Node(&nodeVector,e.button.x, e.button.y,&e);
 
                 }else if(e.button.button == SDL_BUTTON_LEFT and connectionMode){
-                    createEdgeBetweenNodes(e.button.x, e.button.y, firstNode, secondNode, &edgeVector, &nodeVector, &oneNodeSelected);
+                    createEdgeBetweenNodes(e.button.x, e.button.y, firstNode, secondNode, &edgeVector, &nodeVector, &oneNodeSelected, &e);
                 }else if(e.button.button == SDL_BUTTON_LEFT and removeMode){
                     Node *nodeToRemove = checkNodeExistAtPosition(&nodeVector,e.button.x,e.button.y);
                     if(nodeToRemove != nullptr){

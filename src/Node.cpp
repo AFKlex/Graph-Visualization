@@ -21,7 +21,7 @@ void Node::setDegree(int i) {
 }
 
 void append_Node(std::vector<Node> *nodes,int x, int y, SDL_Event * e){
-    std::cout << "Type the name in the Graph and press enter. Backspace to delete a character is allowed!"<< std::endl;
+    std::cout << "Type the name in the Graph and press enter:"<< std::endl;
     std::string inputName = "";
     bool inputMode = true;
     SDL_StartTextInput(); // Enable text input

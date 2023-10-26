@@ -18,6 +18,8 @@ namespace AppConfig{
     TTF_Font* FONT = nullptr;
 
     SDL_Texture *textTexture = nullptr;
+    SDL_Texture *weightTexture = nullptr;
+    bool isWeightedGraph = false;
 
     const int NODE_RADIUS= 15;
 }
