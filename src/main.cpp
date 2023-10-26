@@ -113,6 +113,5 @@ int main() {
 
     destroyGame();
     return 0;
-
 }
 
